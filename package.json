@@ -1,0 +1,1 @@
+{"name": "course-management","version": "1.0.0","description": "A Node.js/Express backend server for course management.","main": "index.js","scripts": {"test": "echo 'Error: no test specified' && exit 1}" ,"author": "Butasinghjatt","license": "MIT","dependencies": {"express": "^4.17.1","cors": "^2.8.5","body-parser": "^1.19.0"}}
