@@ -1,37 +1,48 @@
-// Updated app.js
+// app.js
 
-const express = require('express');
-const bodyParser = require('body-parser');
+// Improved validation and error handling
 
-const app = express();
-app.use(bodyParser.json()); // Use JSON format
+function validateEmail(email) {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
+}
 
-// Example routes (updated)
-app.post('/student', (req, res) => {
-    const studentData = req.body; // JSON format
-    // ...Handle student creation
-});
+function validateForm(form) {
+    let errors = [];
+    if (!form.id || form.id === '') {
+        errors.push('ID cannot be empty.');
+    }
+    if (!validateEmail(form.email)) {
+        errors.push('Invalid email format.');
+    }
+    // Add more validations as needed
+    return errors;
+}
 
-app.post('/instructor', (req, res) => {
-    const instructorData = req.body; // JSON format
-    // ...Handle instructor creation
-});
+function handleFormSubmission(form) {
+    const errors = validateForm(form);
+    if (errors.length) {
+        showErrors(errors);
+        return;
+    }
+    // Assuming submitForm is a function to submit the form
+    submitForm(form).then(response => {
+        showSuccess('Form submitted successfully!');
+    }).catch(error => {
+        showErrors(['An error occurred while submitting the form']);
+    });
+}
 
-app.post('/course', (req, res) => {
-    const courseData = req.body; // JSON format
-    // ...Handle course creation
-});
+function showErrors(errors) {
+    // Implement user feedback for errors
+    errors.forEach(error => console.error(error));
+}
 
-app.post('/enrollment', (req, res) => {
-    const enrollmentData = req.body; // JSON format
-    // ...Handle enrollment
-});
+function showSuccess(message) {
+    // Implement user feedback for success
+    console.log(message);
+}
 
-app.delete('/delete', (req, res) => {
-    const deleteData = req.body; // JSON format
-    // ...Handle deletion
-});
+// Add code to prevent duplicate ID (if appropriate) and handle other error messages accordingly.
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
-});
+// Rest of the app.js code...
